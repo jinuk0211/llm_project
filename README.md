@@ -27,10 +27,11 @@ falcon 데이터셋 - 웹데이터
 훈련과정 다섯가지
 ![image](https://github.com/jinuk0211/llm_project/assets/150532431/acb27926-5252-4ab5-9f93-b85e1ba45f4e)
 1. pretraining
+적어도 1조개의 토큰 필요
 
-2. instruction training
+3. instruction training
 
-3. alignment - 유해성 내용 제거
+4. alignment - 유해성 내용 제거
 
 4.in-context learning
 In-Context Learning은 fine tuning과 다르게 LLM 자체는 건드리지 않고, inference 시에(질문할 때) 질문을 잘 해보자는 접근입니다.
