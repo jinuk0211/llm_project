@@ -1,4 +1,4 @@
-
+huggingface CSO(Chief Strategy Officer) 공동설립자의 little guide
 ![image](https://github.com/jinuk0211/llm_project/assets/150532431/4bae1f5c-ac33-4e2d-bda7-c473cc4dca68)
 ![image](https://github.com/jinuk0211/llm_project/assets/150532431/48b4130a-e91c-487f-954c-36e1655ac882)
 
@@ -10,18 +10,44 @@ https://arxiv.org/pdf/2403.04652.pdf
 
 https://arxiv.org/pdf/2402.16827.pdf
 A Survey on Data Selection for Language Models
+data 필터링은 탄소발생량과 훈련시간 자체를 줄임 -> 데이터 선택 method가 중요함
+이를 위한 일종의 자동화 프레임워크를 만들고 method들을 평가함
 
 https://arxiv.org/pdf/2402.00159.pdf
 dolma 데이터셋
 https://arxiv.org/pdf/2306.01116.pdf
 falcon 데이터셋 - 웹데이터
 
+![image](https://github.com/jinuk0211/llm_project/assets/150532431/7360bb57-b798-41e8-8918-3baeae9661cd)
+
+만약 huggingface로 llm을 만든다면
+![image](https://github.com/jinuk0211/llm_project/assets/150532431/ef1fce52-52fd-4b44-815c-8468ce306096)
+
+
 훈련과정 다섯가지
 ![image](https://github.com/jinuk0211/llm_project/assets/150532431/acb27926-5252-4ab5-9f93-b85e1ba45f4e)
-pretraining
-instruction training
-alignment - 유해성 내용 제거
-in-context learning
+1. pretraining
+
+2. instruction training
+
+3. alignment - 유해성 내용 제거
+
+4.in-context learning
+In-Context Learning은 fine tuning과 다르게 LLM 자체는 건드리지 않고, inference 시에(질문할 때) 질문을 잘 해보자는 접근입니다.
+
+4-1 zero shot 
+Prompt: 빨간 사과가 영어로 뭐야?
+GPT: "Red Apple"
+
+4-2 one shot 
+Prompt: 빨간 사과는 red 사과라고 할께.노란 바나나는?
+GPT: 노란 바나나는 "yellow 바나나"입니다.
+
+4-3. Few-shot , CoT,PoT,VoT도 관련있음
+Prompt: 빨간 사과는 red 사과라고 할께,노란 바나나는 yellow 바나나야,
+그럼 노란 사과는?
+GPT: 노란 사과는 "yellow 사과"입니다.
+
 fine-tuning (task,domain 맞춤형)
 
 ![image](https://github.com/jinuk0211/llm_project/assets/150532431/4a3d1253-50eb-49dc-ad57-d8a5804e8c3b)
@@ -63,9 +89,9 @@ nanotron?
 alignment - 정치, 폭력, 19세 이상, 윤리적 내용 제거 - RLFH
 ![image](https://github.com/jinuk0211/llm_project/assets/150532431/78b2210b-f2d1-4007-9967-28377aaca9ac)
 
-PPO
+alignment(PPO)
 ![image](https://github.com/jinuk0211/llm_project/assets/150532431/64e6cf90-bb4b-45cc-9f38-369d499e2b10)
-DPO
+alignment(DPO)
 ![image](https://github.com/jinuk0211/llm_project/assets/150532431/a9918777-2eca-47dd-9bc1-3acd60fb2190)
 
 추론속도 향상
