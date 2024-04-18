@@ -86,3 +86,19 @@ CPU overhead bound 상태가 발생하는 주요 원인은 다음과 같습니�
 시스템 호출(System Calls): 프로세스가 운영체제에 서비스를 요청할 때 발생하는 오버헤드입니다. 시스템 호출 횟수가 많을수록 CPU 오버헤드가 증가합니다.
 메모리 관리(Memory Management): 가상 메모리 시스템 관리, 페이지 폴트 처리 등의 오버헤드입니다. 메모리 사용량이 많고 페이지 폴트 발생 빈도가 높을수록 CPU 오버헤드가 증가합니다.
 동기화 오버헤드(Synchronization Overhead): 멀티스레드 또는 멀티프로세스 환경에서 공유 리소스에 대한 동기화 오버헤드입니다. 락(lock)이나 세마포어(semaphore) 등의 동기화 메커니즘 사용 빈도가 높을수록 CPU 오버헤드가 증가합니다.
+
+-> Torch.compile 큰 region에서 단일 컴파일되는 region 으로 만든다. 특히 mode= 'reduce-overhead'의 경우 cpu overhead 발생을 크게 줄일수 있다
+
+Graph break는 CPU와 GPU 간의 데이터 전송 오버헤드로 인한 성능 저하 현상을 의미하며, 이를 최소화하기 위해서는 배치 크기 조절, 연산 그래프 최적화, 모델 병렬화 
+
+-> full graph= True로 설청해 graph break가 일어나지 않도록 확인함
+
+e.g) torch.compile(decode_one_token, mode="reduce-overhead", fullgraph=True)
+
+문제 2가지
+1-1.kv cache , long context가 될수록 kv cache의 메모리를 재할당해야함 ->  비쌈
+1-2. kv cache의 동적할당은 overhead 줄이기 힘들게 만듦, cudagraph를 사용할수 없게됨
+-> static kv cache를 사용 
+효과 : kv cache길이의 한계를 정하고 컴퓨팅할 때 안쓰는 부분은 masking함
+2 prefill 문제
+prefill은 더 큰 동적시스템을 필요로함 다양한 프롬프트 길이를 가질수 있기 때문에 한계 조정 불가능
