@@ -129,3 +129,7 @@ e.g) torch.compile(decode_one_token, mode="reduce-overhead", fullgraph=True)
 효과 : kv cache길이의 한계를 정하고 컴퓨팅할 때 안쓰는 부분은 masking함
 2 prefill 문제
 prefill은 더 큰 동적시스템을 필요로함 다양한 프롬프트 길이를 가질수 있기 때문에 한계 조정 불가능
+
+![cuda-image-2](https://github.com/jinuk0211/llm_project/assets/150532431/4b07f673-1cd2-47f3-99e0-f7893d27fd97)
+
+![image](https://github.com/jinuk0211/llm_project/assets/150532431/03bfe5d7-e4f8-4664-8b7f-0d44e6010f57)
