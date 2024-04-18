@@ -1,5 +1,6 @@
 
 ![image](https://github.com/jinuk0211/llm_project/assets/150532431/4bae1f5c-ac33-4e2d-bda7-c473cc4dca68)
+![image](https://github.com/jinuk0211/llm_project/assets/150532431/48b4130a-e91c-487f-954c-36e1655ac882)
 
 # llm_project
 목표 : bio 관련 llm  
