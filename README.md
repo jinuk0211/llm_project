@@ -29,9 +29,9 @@ falcon 데이터셋 - 웹데이터
 1. pretraining
 적어도 1조개의 토큰 필요
 
-3. instruction training
+2. instruction training
 
-4. alignment - 유해성 내용 제거
+3. alignment - 유해성 내용 제거
 
 4.in-context learning
 In-Context Learning은 fine tuning과 다르게 LLM 자체는 건드리지 않고, inference 시에(질문할 때) 질문을 잘 해보자는 접근입니다.
@@ -49,7 +49,7 @@ Prompt: 빨간 사과는 red 사과라고 할께,노란 바나나는 yellow 바�
 그럼 노란 사과는?
 GPT: 노란 사과는 "yellow 사과"입니다.
 
-fine-tuning (task,domain 맞춤형)
+5.fine-tuning (task,domain 맞춤형)
 
 ![image](https://github.com/jinuk0211/llm_project/assets/150532431/4a3d1253-50eb-49dc-ad57-d8a5804e8c3b)
 ![image](https://github.com/jinuk0211/llm_project/assets/150532431/44b49189-ac61-4dad-9f1e-fc8da201e493)
