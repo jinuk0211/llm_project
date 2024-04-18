@@ -77,3 +77,12 @@ https://arxiv.org/pdf/2401.10774.pdf
 
 compiling and cuda graph
 https://pytorch.org/blog/accelerating-generative-ai-2/
+
+
+CPU overhead bound 상태가 발생하는 주요 원인은 다음과 같습니다:
+
+컨텍스트 스위칭(Context Switching): 프로세스 간 전환 시 발생하는 오버헤드입니다. 컨텍스트 스위칭이 자주 일어날수록 CPU 오버헤드가 증가합니다.
+인터럽트 처리(Interrupt Handling): 하드웨어 인터럽트나 소프트웨어 인터럽트 처리 시 발생하는 오버헤드입니다. 인터럽트 빈도가 높을수록 CPU 오버헤드가 증가합니다.
+시스템 호출(System Calls): 프로세스가 운영체제에 서비스를 요청할 때 발생하는 오버헤드입니다. 시스템 호출 횟수가 많을수록 CPU 오버헤드가 증가합니다.
+메모리 관리(Memory Management): 가상 메모리 시스템 관리, 페이지 폴트 처리 등의 오버헤드입니다. 메모리 사용량이 많고 페이지 폴트 발생 빈도가 높을수록 CPU 오버헤드가 증가합니다.
+동기화 오버헤드(Synchronization Overhead): 멀티스레드 또는 멀티프로세스 환경에서 공유 리소스에 대한 동기화 오버헤드입니다. 락(lock)이나 세마포어(semaphore) 등의 동기화 메커니즘 사용 빈도가 높을수록 CPU 오버헤드가 증가합니다.
