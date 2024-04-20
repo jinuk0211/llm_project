@@ -13,3 +13,7 @@ TENSOR
 pipe 
 
 ![image](https://github.com/jinuk0211/llm_project/assets/150532431/bc8c1451-ed0e-48b2-ae71-7f574f34b954)
+
+MoE
+
+![image](https://github.com/jinuk0211/llm_project/assets/150532431/8d0c1c52-cfd3-4615-8e31-a1c72fa37e52)
