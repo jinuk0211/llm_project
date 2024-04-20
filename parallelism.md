@@ -17,3 +17,5 @@ pipe
 MoE
 
 ![image](https://github.com/jinuk0211/llm_project/assets/150532431/8d0c1c52-cfd3-4615-8e31-a1c72fa37e52)
+
+https://www.threads.net/@rien_n_est/post/C4QefgpysSM
