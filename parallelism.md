@@ -31,6 +31,10 @@ multiprocessing을 사용, 하나의 gpu를 위해 하나의 process를 사용(D
 하지만 gpu 계산한 결과를 합치는 과정이 필요해지기에 gpu끼리 통신하기 위한 백엔드 라이브러리가 필요해짐 ex)'nccl'
 ![image](https://github.com/jinuk0211/llm_project/assets/150532431/46fee905-20c0-42de-892b-83a3970710b8)
 
+FSDP 
+
+- ![image](https://github.com/jinuk0211/llm_project/assets/150532431/55edd15d-9d79-433b-853b-dc92ddd98875)
+
 
 TensorParallel -커다란 Weight matrix를 여러 GPU로 나누어 연산을 한 후 그 결과값을 합치는(Concatenate)
 
