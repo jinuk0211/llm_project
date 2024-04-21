@@ -2,6 +2,10 @@ DATA
 
 ![image](https://github.com/jinuk0211/llm_project/assets/150532431/a04f0f7d-5a4c-402c-8d3f-833c16c10305)
 
+ZeRO DATA
+
+![image](https://github.com/jinuk0211/llm_project/assets/150532431/016e4b65-bcc2-476a-a4ef-850622d07164)
+
 seq
 
 ![image](https://github.com/jinuk0211/llm_project/assets/150532431/91fe2a6c-82e3-4e72-b46d-4b766890af9a)
@@ -20,7 +24,13 @@ MoE
 
 https://www.threads.net/@rien_n_est/post/C4QefgpysSM
 
-DataParallel - Data parallelism은 학습 시간을 단축한다는 장점이 있지만 매 Weight parameter를 업데이트할 때마다 여러 GPU가 학습한 결과를 종합한 후 다시 나누는 Synchronization이 필요한 단점이 존재
+DataParallel - DP는 학습 시간을 단축한다는 장점이 있지만 매 Weight parameter를 업데이트할 때마다 여러 GPU가 학습한 결과를 종합한 후 다시 나누는 Synchronization이 필요한 단점이 존재
+작동방식 - 동기화가 진행되는 첫번째 gpu에 부하가 많이가게됨
+파이썬의 GIL 특성상 multithread x 
+multiprocessing을 사용, 하나의 gpu를 위해 하나의 process를 사용(DDP) ->
+하지만 gpu 계산한 결과를 합치는 과정이 필요해지기에 gpu끼리 통신하기 위한 백엔드 라이브러리가 필요해짐 ex)'nccl'
+![image](https://github.com/jinuk0211/llm_project/assets/150532431/46fee905-20c0-42de-892b-83a3970710b8)
+
 
 TensorParallel -커다란 Weight matrix를 여러 GPU로 나누어 연산을 한 후 그 결과값을 합치는(Concatenate)
 
