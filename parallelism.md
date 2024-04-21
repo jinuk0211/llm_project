@@ -30,11 +30,48 @@ MoE
 
 https://www.threads.net/@rien_n_est/post/C4QefgpysSM
 
-DataParallel - DP는 학습 시간을 단축한다는 장점이 있지만 매 Weight parameter를 업데이트할 때마다 여러 GPU가 학습한 결과를 종합한 후 다시 나누는 Synchronization이 필요한 단점이 존재
-작동방식 - 동기화가 진행되는 첫번째 gpu에 부하가 많이가게됨
+llm 만들기 가이드 in 2024 - 병렬화
+
+4D parallelism
+
+DataParallelism - parameter
+PipelineParallelism - layer
+TensorParallelism - tensor
+SequenceParalllelism - layernorm, activation
+
+파이토치, 허깅페이스 document 
+
+1. 데이터 병렬화 DP, DDP
+Data Parallell,Distributed Data Parallel
+
+Zero-DP 시각화 ↓
+
+La | Lb | Lc     
+a0 | b0 | c0
+a1 | b1 | c1  
+a2 | b2 | c2
+
+gpu rank 0 에는 layer A의 a0, layer B의 b0, layer C의 c0
+GPU0:
+La | Lb | Lc
+a0 | b0 | c0
+
+gpu rank 1에는 각 layer의 a1,b1,c1
+GPU1:
+La | Lb | Lc
+a1 | b1 | c1
+
+요약
+DataParallel - DP는 학습 시간을 단축한다는 장점이 있지만 매 Weight parameter를 업데이트할 때마다 여러 GPU가 학습한 결과를 종합한 후 다시 나누는 Synchronization이 필요한 단점이 존재.
+
+작동방식 
+- 동기화가 진행되는 첫번째 gpu에 부하가 많이가게됨
 파이썬의 GIL 특성상 multithread x 
-multiprocessing을 사용, 하나의 gpu를 위해 하나의 process를 사용(DDP) ->
+-> multiprocessing을 사용, 하나의 gpu를 위해 하나의 process를 사용(DDP) ->
 하지만 gpu 계산한 결과를 합치는 과정이 필요해지기에 gpu끼리 통신하기 위한 백엔드 라이브러리가 필요해짐 ex)'nccl'
+
+밑의 과정이 DP인데 batch별로 gpu들의 복제된 모델에 들어가 이를 forward pass 진행 후 loss를 평균을 내서 구한뒤 첫뻔쨰 gpu에 이를 저장 후 다시 나눈후 backward pass 진행
+
 ![image](https://github.com/jinuk0211/llm_project/assets/150532431/46fee905-20c0-42de-892b-83a3970710b8)
 
 FSDP 
