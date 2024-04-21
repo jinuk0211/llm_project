@@ -14,9 +14,15 @@ TENSOR
 
 ![image](https://github.com/jinuk0211/llm_project/assets/150532431/9ac7b9cb-3681-4c0a-bd4c-0052c42fd43c)
 
-pipe 
+pipeline
 
 ![image](https://github.com/jinuk0211/llm_project/assets/150532431/bc8c1451-ed0e-48b2-ae71-7f574f34b954)
+
+interleaved pipeline
+
+![image](https://github.com/jinuk0211/llm_project/assets/150532431/b471f12e-20ac-4d61-8f5e-67dc6c7f40be)
+
+DeepSpeed, Varuna and SageMaker에서 사용
 
 MoE
 
