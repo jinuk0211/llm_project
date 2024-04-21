@@ -23,3 +23,5 @@ https://www.threads.net/@rien_n_est/post/C4QefgpysSM
 DataParallel - Data parallelism은 학습 시간을 단축한다는 장점이 있지만 매 Weight parameter를 업데이트할 때마다 여러 GPU가 학습한 결과를 종합한 후 다시 나누는 Synchronization이 필요한 단점이 존재
 
 TensorParallel -커다란 Weight matrix를 여러 GPU로 나누어 연산을 한 후 그 결과값을 합치는(Concatenate)
+
+DDP에서는 각 프로세스가 계산한 gradient를 모두 합산한 후, 전체 프로세스 수로 나누어 평균 gradient를 FSDP 역시 비슷한 방식으로 작동하지만, 메모리 사용량을 최적화하기 위해 gradient와 모델 파라미터를 샤딩하는 추가적인 메커니즘
