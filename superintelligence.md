@@ -47,6 +47,7 @@ LLM은 먼저 새로운 과제(new task)를 evolving 하고 해당 솔루션을 
 ~introduction,개요 끝 세부내용 길어서 다음에
 
 ![image](https://github.com/jinuk0211/llm_project/assets/150532431/999c8f98-d9a8-44d9-b0e4-4aab4482a322)
+
 특정 evolution goal에 집중해 모델이 관련된 task에 참여하게 함 -> 경험(experience)를 최적화 -> 아키텍쳐 update -> next cycle, iteration으로 가기 전 얼마나 진척했는지 확인
 
 experience aquistion
@@ -59,6 +60,8 @@ update
 이 T,Y를 framework에 통합시키는데 이것이 모델이 현재상태에서 optimized되는 과정이다
 
 ![image](https://github.com/jinuk0211/llm_project/assets/150532431/745cb593-e096-4fa6-aa29-082f51efa87f)
+![image](https://github.com/jinuk0211/llm_project/assets/150532431/82c2359a-f1a5-4a0c-a608-54d97d75f53a)
+
 
 evaluation
 외부 ENV에 의해 모델이 평가되는데 이 다음 iteration의 objective function에 영향을 줌
