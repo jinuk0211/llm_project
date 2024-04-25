@@ -47,3 +47,27 @@ LLM은 먼저 새로운 과제(new task)를 evolving 하고 해당 솔루션을 
 ~introduction,개요 끝 세부내용 길어서 다음에
 
 ![image](https://github.com/jinuk0211/llm_project/assets/150532431/999c8f98-d9a8-44d9-b0e4-4aab4482a322)
+특정 evolution goal에 집중해 모델이 관련된 task에 참여하게 함 -> 경험(experience)를 최적화 -> 아키텍쳐 update -> next cycle, iteration으로 가기 전 얼마나 진척했는지 확인
+
+experience aquistion
+t 번째 iteration 때마다, evolution objective(goal)를 확인하고 이 objective를 따라 새로운 task를 시작하고 solution을 내는데 이를 environment으로부터 피드백을 받게 된다. 그리고 새로운 experience를 얻는 것으로 끝마친다.
+
+refinement
+위의 받은 new experience를 정체하는데 부정확한 데이터 제거, 불완벽한 것을 향상 이를 통해 refined된 T,Y를 받는다.
+
+update 
+이 T,Y를 framework에 통합시키는데 이것이 모델이 현재상태에서 optimized되는 과정이다
+
+![image](https://github.com/jinuk0211/llm_project/assets/150532431/745cb593-e096-4fa6-aa29-082f51efa87f)
+
+evaluation
+외부 ENV에 의해 모델이 평가되는데 이 다음 iteration의 objective function에 영향을 줌
+
+evolution objetive에 관해
+모델의 자가발전을 위한 가이드를 제공하는 미리 정해진 목표로 인간이 필요와 욕구에 따라 목표를 설정하는 것과 마찬가지로 모델이 self 업데이트하는 방식을 결정하기 때문에 중요하다
+
+LLM은 새로운 데이터에서 자율적으로 학습하고, 알고리즘을 최적화하며, 변화하는 환경에 적응할 수 있어 피드백이나 자체 평가에서 자신의 필요를 "느끼고" 인간 개입 없이 기능을 향상시키기 위한 목표를 스스로 설정할 수 있게된다
+ 
+수식화
+evolution objective를 evolution abilitiy, evolution direction으로 정의한다. 
+evolution ability는 innate and detailed skill을 나타내고, 진화 방향은 evolution objective가 향상시키고자 하는 방향이다
