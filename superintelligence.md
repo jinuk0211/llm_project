@@ -74,3 +74,5 @@ LLM은 새로운 데이터에서 자율적으로 학습하고, 알고리즘을 �
 수식화
 evolution objective를 evolution abilitiy, evolution direction으로 정의한다. 
 evolution ability는 innate and detailed skill을 나타내고, 진화 방향은 evolution objective가 향상시키고자 하는 방향이다
+
+![image](https://github.com/jinuk0211/llm_project/assets/150532431/860ab150-4079-4fdf-afb6-e00503d3f07f)
