@@ -76,3 +76,12 @@ Query에도 문장, 질문이 들어오면 라벨, 답변 형식의 답이 나�
 이는 복잡한 reasoning 과제에서 뛰어난 성능을 보임. 또한 few-shot과 달리 pretraining에서의 데이터,학습 편향을 overriding하고 numerical input에서 고차원 함수를 학습하는데 효과적임
 
 ![image](https://github.com/jinuk0211/llm_project/assets/150532431/a4666c69-7a05-494c-9745-d7502b849cbc)
+
+
+unsupervised ICL 예시
+
+![image](https://github.com/jinuk0211/llm_project/assets/150532431/7343fb5a-91f7-4f38-a578-1c1d0518979e)
+
+![image](https://github.com/jinuk0211/llm_project/assets/150532431/c13de153-4a18-470d-b1e7-f78831f85487)
+
+![image](https://github.com/jinuk0211/llm_project/assets/150532431/6c6bc7d6-f8f4-4058-b618-4357a2e67adc)
