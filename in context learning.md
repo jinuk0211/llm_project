@@ -19,4 +19,5 @@ https://arxiv.org/abs/2402.10200
 
 ![image](https://github.com/jinuk0211/llm_project/assets/150532431/dd275103-00f3-4abe-8384-5772fede0744)
 
-![image](https://github.com/jinuk0211/llm_project/assets/150532431/4be4651a-42c1-45c9-991a-1199110480dc)
+![image](https://github.com/jinuk0211/llm_project/assets/150532431/c90be5cf-739c-40d6-bfbe-422f4754679a)
+
