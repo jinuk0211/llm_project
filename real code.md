@@ -84,3 +84,6 @@ https://github.com/vikhyat/moondream
 https://github.com/vllm-project/vllm
 
 https://github.com/jshuadvd/LongRoPE
+
+minicpm
+https://github.com/OpenBMB/MiniCPM/blob/main/model%2Fmodeling_minicpm.py
