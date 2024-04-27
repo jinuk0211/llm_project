@@ -5,6 +5,7 @@ Why do small language models underperform? -11 Apr 2024
 https://arxiv.org/pdf/2404.07647.pdf
 slm 포텐셜에 관한 연구 - 22 Apr 2024
 https://arxiv.org/pdf/2404.06395.pdf
++chinchilla
 
 수조 개의 파라미터를 가진 대규모 언어 모델(LLM)을 개발하려는 관심이 높아지면서 자원 효율성과 cost에 대한 우려가 커지고 있다. 특히 실험에 드는 엄청난 비용을 고려할 때, 효율적인 대안으로 소규모 언어 모델(SLM)의 잠재력을 탐구하는 것이 더 중요해지고 있다.
  
@@ -36,9 +37,16 @@ page 5
 모델의 hidden dim과 목표 문맥 확률 분포의 높은 랭크(the high rank of
 the target contextual probability distribution) 간의 불일치에서 비롯된다는 것 발견
 
-불일치는 모델의 linear prediction head에서 잘 알려진 softmax bottleneck 현상을 일으켜 성능에 영향을 미침.
+불일치는 language 모델의 linear prediction head에서 잘 알려진 softmax bottleneck 현상을 일으켜 성능에 영향을 미침.
 
 우리는 다양한 setting으로 softmax bottleneck 현상의 영향을 측정했고, hidden_layer_dim이 1000 미만인 모델은 late pretrain에서 degraded latent representation을 택하여 평가 성능이 저하되는 것을 발견
+
+결론부터
+ 작은 모델의 representation이 이 saturation(포화)과 동시에 degrade(퇴하)하는 것을 발견. 우리는 rank 포화에 중점을 맞춰 이를 설명, ie) SLM prediction 헤드의 특이값(singular value) 분포(distribution) 엔트로피의 폭발
+
+ 우리는 실험적으로 rank of target contextual distribution이 대개 높다는 것을 확인. 또한 모델의 output representation의 표현력?(expressiveness)과 관계없이 linear head W가 rank(W) < 1000일 때 성능에 상당한 영향을 미친다는 것을 관찰
+
+ 그리고 이를 수치화 (<- low rank linear head에 의한 성능 저하)
 
 
 chinchilla optimal
