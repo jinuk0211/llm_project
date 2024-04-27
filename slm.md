@@ -39,3 +39,13 @@ the target contextual probability distribution) 간의 불일치에서 비롯된
 불일치는 모델의 linear prediction head에서 잘 알려진 softmax bottleneck 현상을 일으켜 성능에 영향을 미침.
 
 우리는 다양한 setting으로 softmax bottleneck 현상의 영향을 측정했고, hidden_layer_dim이 1000 미만인 모델은 late pretrain에서 degraded latent representation을 택하여 평가 성능이 저하되는 것을 발견
+
+
+chinchilla optimal
+토큰 수에 따른 최적의 모델 사이즈는 무엇인가?
+70M에서 16B 파라미터의 400개의 llm을 학습(5B, 500B 토큰 사이로)
+
+알아낸 것 
+모델 파라미터수가 2배되면 -> 훈련때 사용되는 토큰수도 2배가 되야함
+
+
