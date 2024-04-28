@@ -990,8 +990,8 @@ MINICPM_INPUTS_DOCSTRING = r"""
 )
 class MiniCPMModel(MiniCPMPreTrainedModel):
     """
-    Transformer decoder consisting of *config.num_hidden_layers* layers. Each layer is a [`MiniCPMDecoderLayer`]
-
+    config.num_hidden_layers 만큼의 decoder layer를 가지는 트랜스포머
+    layer = MiniCPMDecoderLayer class
     Args:
         config: MiniCPMConfig
     """
@@ -1011,7 +1011,7 @@ class MiniCPMModel(MiniCPMPreTrainedModel):
         self.norm = MiniCPMRMSNorm(config.hidden_size, eps=config.rms_norm_eps)
 
         self.gradient_checkpointing = False
-        # Initialize weights and apply final processing
+        # weight init / last process 수행
         self.post_init()
 
     def get_input_embeddings(self):
@@ -1041,7 +1041,7 @@ class MiniCPMModel(MiniCPMPreTrainedModel):
 
         return_dict = return_dict if return_dict is not None else self.config.use_return_dict
 
-        # retrieve input_ids and inputs_embeds
+        #  input_ids 와 inputs_embeds retrieve
         if input_ids is not None and inputs_embeds is not None:
             raise ValueError("You cannot specify both input_ids and inputs_embeds at the same time")
         elif input_ids is not None:
@@ -1076,11 +1076,12 @@ class MiniCPMModel(MiniCPMPreTrainedModel):
             inputs_embeds = self.embed_tokens(input_ids) * self.config.scale_emb
 
         if self._use_flash_attention_2:
-            # 2d mask is passed through the layers
+            # 2d mask (flashattention 사용시)
             attention_mask = attention_mask if (attention_mask is not None and 0 in attention_mask) else None
         elif self._use_sdpa and not output_attentions:
-            # output_attentions=True can not be supported when using SDPA, and we fall back on
-            # the manual implementation that requires a 4D causal mask in all cases.
+            # output_attentions=True 은 scaled-dot product attention 사용시 불가능,
+            # 모든 cases에서 4D causal mask을 필요 -> manual implementation 
+        
             attention_mask = _prepare_4d_causal_attention_mask_for_sdpa(
                 attention_mask,
                 (batch_size, seq_length),
@@ -1088,7 +1089,7 @@ class MiniCPMModel(MiniCPMPreTrainedModel):
                 past_key_values_length,
             )
         else:
-            # 4d mask is passed through the layers
+            # 4d mask - layers 통과
             attention_mask = _prepare_4d_causal_attention_mask(
                 attention_mask, (batch_size, seq_length), inputs_embeds, past_key_values_length
             )
