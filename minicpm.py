@@ -31,8 +31,7 @@ from transformers.modeling_attn_mask_utils import (
     _prepare_4d_causal_attention_mask,
     _prepare_4d_causal_attention_mask_for_sdpa,
 )
-# 토크나이져에 의해 생성된 [batch_size, total_sequence_length] SHAPE의
-# 2D ATTENTION MASK가 트랜스포머로 [batch_size, heads, input_ids_length, total_sequence_length]의 TRANSFORM을 겪기에
+
 from transformers.modeling_outputs import BaseModelOutputWithPast, CausalLMOutputWithPast, SequenceClassifierOutputWithPast
 from transformers.modeling_utils import PreTrainedModel
 from transformers.pytorch_utils import ALL_LAYERNORM_LAYERS, is_torch_greater_or_equal_than_1_13 #TORCH 버젼 확인
