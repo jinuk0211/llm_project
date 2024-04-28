@@ -1,10 +1,6 @@
-# Copyright 2022 EleutherAI and the HuggingFace Inc. team. All rights reserved.
-#
+
 # This code is based on EleutherAI's GPT-NeoX library and the GPT-NeoX
-# and OPT implementations in this library. It has been modified from its
-# original forms to accommodate minor architectural differences compared
-# to GPT-NeoX and OPT used by the Meta AI team that trained the model.
-#
+
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
@@ -35,9 +31,11 @@ from transformers.modeling_attn_mask_utils import (
     _prepare_4d_causal_attention_mask,
     _prepare_4d_causal_attention_mask_for_sdpa,
 )
+# 토크나이져에 의해 생성된 [batch_size, total_sequence_length] SHAPE의
+# 2D ATTENTION MASK가 트랜스포머로 [batch_size, heads, input_ids_length, total_sequence_length]의 TRANSFORM을 겪기에
 from transformers.modeling_outputs import BaseModelOutputWithPast, CausalLMOutputWithPast, SequenceClassifierOutputWithPast
 from transformers.modeling_utils import PreTrainedModel
-from transformers.pytorch_utils import ALL_LAYERNORM_LAYERS, is_torch_greater_or_equal_than_1_13
+from transformers.pytorch_utils import ALL_LAYERNORM_LAYERS, is_torch_greater_or_equal_than_1_13 #TORCH 버젼 확인
 from transformers.utils import (
     add_start_docstrings,
     add_start_docstrings_to_model_forward,
@@ -51,8 +49,9 @@ from .configuration_minicpm import MiniCPMConfig
 import re
 
 try:
-    from flash_attn import flash_attn_func, flash_attn_varlen_func
+    from flash_attn import flash_attn_func, flash_attn_varlen_func #FLASHATTENTION
     from flash_attn.bert_padding import index_first_axis, pad_input, unpad_input  # noqa
+    # PEP8 warnings 무시
 except:
     pass
 
@@ -730,7 +729,7 @@ class MiniCPMSdpaAttention(MiniCPMAttention):
         # SDPA with memory-efficient backend is currently (torch==2.1.2) bugged with non-contiguous inputs with custom attn_mask,
         # Reference: https://github.com/pytorch/pytorch/issues/112577.
         if query_states.device.type == "cuda" and attention_mask is not None:
-            query_states = query_states.contiguous()
+            query_states = query_states.contiguous() #pytorch 텐서 메모리 재배치
             key_states = key_states.contiguous()
             value_states = value_states.contiguous()
 
@@ -1206,8 +1205,7 @@ class MiniCPMForCausalLM(MiniCPMPreTrainedModel):
 
         hidden_states = outputs[0]
         if self.config.pretraining_tp > 1:
-            lm_head_slices = self.lm_head.weight.split(self.vocab_size // self.config.pretraining_tp, dim=0)
-            logits = [F.linear(hidden_states, lm_head_slices[i]) for i in range(self.config.pretraining_tp)]
+-            logits = [F.linear(hidden_states, lm_head_slices[i]) for i in range(self.config.pretraining_tp)]
             logits = torch.cat(logits, dim=-1)
         else:
             logits = self.lm_head(hidden_states / (self.config.hidden_size / self.config.dim_model_base))
