@@ -481,17 +481,23 @@ class MiniCPMAttention(nn.Module): #multihead attention
 
 class MiniCPMFlashAttention2(MiniCPMAttention):
     """
-    MiniCPM flash attention module. This module inherits from `MiniCPMAttention` as the weights of the module stays
-    untouched. The only required change would be on the forward pass where it needs to correctly call the public API of
-    flash attention and deal with padding tokens in case the input contains any of them.
+    MiniCPM flashattention 적용
+    MiniCPMAttention class에서 weight 상속 받음, 변경 x
+    변경사항(<->cpmattention)은 flashattention API를 호출하는 forward pass.
     """
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-
-        # TODO: Should be removed once Flash Attention for RoCm is bumped to 2.1.
-        # flash_attn<2.1 generates top-left aligned causal mask, while what is needed here is bottom-right alignement, that was made default for flash_attn>=2.1. This attribute is used to handle this difference. Reference: https://github.com/Dao-AILab/flash-attention/releases/tag/v2.1.0.
-        # Beware that with flash_attn<2.1, using q_seqlen != k_seqlen (except for the case q_seqlen == 1) produces a wrong mask (top-left).
+        '''
+        TODO    
+        RoCm에서 Flash Attention 버전이 2.1로 업데이트되면 제거되야함
+         "Radeon Open Compute" AMD가 제공하는 오픈소스 GPU 컴퓨팅 플랫폼
+        이전 버전의 flash_attn은 상단 top-left aligned causal mask 생성
+        여기에서 필요한 것은 bottom-right alignment로, 이는 flash_attn>=2.1에서만 기본값으로 설정됨
+        참조 : https://github.com/Dao-AILab/flash-attention/releases/tag/v2.1.0.
+        2.1 이하 버젼에서는 q_seqlen != k_seqlen(except for the case q_seqlen == 1) 사용시 top-left 의 여기랑 안 맞는 mask 생성        
+        '''
+         
         self._flash_attn_uses_top_left_mask = not is_flash_attn_greater_or_equal_2_10()
 
     def forward(
@@ -504,7 +510,7 @@ class MiniCPMFlashAttention2(MiniCPMAttention):
         use_cache: bool = False,
         **kwargs,
     ) -> Tuple[torch.Tensor, Optional[torch.Tensor], Optional[Tuple[torch.Tensor]]]:
-        # MiniCPMFlashAttention2 attention does not support output_attentions
+
         if "padding_mask" in kwargs:
             warnings.warn(
                 "Passing `padding_mask` is deprecated and will be removed in v4.37. Please make sure use `attention_mask` instead.`"
@@ -521,9 +527,9 @@ class MiniCPMFlashAttention2(MiniCPMAttention):
         key_states = self.k_proj(hidden_states)
         value_states = self.v_proj(hidden_states)
 
-        # Flash attention requires the input to have the shape
-        # batch_size x seq_length x head_dim x hidden_dim
-        # therefore we just need to keep the original shape
+        # Flash attention 아래의 shape, input 필요
+        # batch_size x seq_length x head_dim x hidden_dim 필요
+        # 원래 shape 유지
         query_states = query_states.view(bsz, q_len, self.num_heads, self.head_dim).transpose(1, 2)
         key_states = key_states.view(bsz, q_len, self.num_key_value_heads, self.head_dim).transpose(1, 2)
         value_states = value_states.view(bsz, q_len, self.num_key_value_heads, self.head_dim).transpose(1, 2)
@@ -537,20 +543,25 @@ class MiniCPMFlashAttention2(MiniCPMAttention):
         if past_key_value is not None:
             cache_kwargs = {"sin": sin, "cos": cos}  # Specific to RoPE models
             key_states, value_states = past_key_value.update(key_states, value_states, self.layer_idx, cache_kwargs)
-
-        # TODO: These transpose are quite inefficient but Flash Attention requires the layout [batch_size, sequence_length, num_heads, head_dim]. We would need to refactor the KV cache
-        # to be able to avoid many of these transpose/reshape/view.
+        '''
+        #Todo list 개선해야 될 사항
+        아래 코드 전치(transpose) 연산은 비효율적
+        하지만 Flash Attention 메커니즘에서는 [batch_size, sequence_length, num_heads, head_dim] layout이 필요
+        따라서 이 레이아웃을 맞추기 위해 transpose, reshape, view 등의 작업
+        이러한 비효율적인 작업을 줄이기 위해서는 KV 캐시(Key-Value Cache)를 refactor해야할 필요가 있음
+        '''
+        
         query_states = query_states.transpose(1, 2)
         key_states = key_states.transpose(1, 2)
         value_states = value_states.transpose(1, 2)
 
         dropout_rate = self.attention_dropout if self.training else 0.0
-
-        # In PEFT, usually we cast the layer norms in float32 for training stability reasons
-        # therefore the input hidden states gets silently casted in float32. Hence, we need
-        # cast them back in the correct dtype just to be sure everything works as expected.
-        # This might slowdown training & inference so it is recommended to not cast the LayerNorms
-        # in fp32. (MiniCPMRMSNorm handles it correctly)
+        # PEFT에서는 보통 학습 안정성 때문에 layer norm을 float32로 캐스팅
+        # 따라서 입력 hidden states는 자동으로 float32로 캐스팅됨. So
+        # 모든 것이 예상대로 작동하는지 확인하기 위해 올바른 데이터 타입으로 다시 캐스팅
+        # 이는 train 및 inference 속도를 저하시킬 수 있으므로, LayerNorm을
+        # fp32로 캐스팅하지 않는 것이 좋음. (MiniCPMRMSNorm은 이를 정확히 처리)
+        # 결론 : peft가 아니니까 float32로 안함
 
         input_dtype = query_states.dtype
         if input_dtype == torch.float32:
