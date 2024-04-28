@@ -147,7 +147,7 @@ class MiniCPMRotaryEmbedding(nn.Module):
         self.max_seq_len_cached = seq_len
         t = torch.arange(self.max_seq_len_cached, device=device, dtype=self.inv_freq.dtype)
         freqs = torch.outer(t, self.inv_freq)
-        # Different from paper, but it uses a different permutation in order to obtain the same calculation
+
         emb = torch.cat((freqs, freqs), dim=-1)
 
         self.register_buffer("cos_cached", emb.cos().to(dtype), persistent=False)
@@ -177,14 +177,17 @@ class MiniCPMLinearScalingRotaryEmbedding(MiniCPMRotaryEmbedding):
         t = t / self.scaling_factor
 
         freqs = torch.outer(t, self.inv_freq)
-        # Different from paper, but it uses a different permutation in order to obtain the same calculation
+
         emb = torch.cat((freqs, freqs), dim=-1)
         self.register_buffer("cos_cached", emb.cos().to(dtype), persistent=False)
         self.register_buffer("sin_cached", emb.sin().to(dtype), persistent=False)
 
 
 class MiniCPMDynamicNTKScalingRotaryEmbedding(MiniCPMRotaryEmbedding):
-    """MiniCPMRotaryEmbedding extended with Dynamic NTK scaling. Credits to the Reddit users /u/bloc97 and /u/emozilla"""
+    """MiniCPMRotaryEmbedding extended with Dynamic NTK scaling.
+    Neural Tangent Kernel 
+    Reddit 에서 처음 소개된 방법
+    Reddit users /u/bloc97 and /u/emozilla"""
 
     def __init__(self, dim, max_position_embeddings=2048, base=10000, device=None, scaling_factor=1.0):
         self.scaling_factor = scaling_factor
@@ -203,7 +206,7 @@ class MiniCPMDynamicNTKScalingRotaryEmbedding(MiniCPMRotaryEmbedding):
         t = torch.arange(self.max_seq_len_cached, device=device, dtype=self.inv_freq.dtype)
 
         freqs = torch.outer(t, self.inv_freq)
-        # Different from paper, but it uses a different permutation in order to obtain the same calculation
+        # 두 벡터의 외적을 계산하여 행렬을 반환
         emb = torch.cat((freqs, freqs), dim=-1)
 
         self.register_buffer("cos_cached", emb.cos().to(dtype), persistent=False)
@@ -211,20 +214,25 @@ class MiniCPMDynamicNTKScalingRotaryEmbedding(MiniCPMRotaryEmbedding):
 
 
 def rotate_half(x):
-    """Rotates half the hidden dims of the input."""
+   
     x1 = x[..., : x.shape[-1] // 2]
     x2 = x[..., x.shape[-1] // 2 :]
     return torch.cat((-x2, x1), dim=-1)
-
-
+    
+''' 예시
+   [[1, 2, 3, 4, 5, 6]], shape (1,6)
+   [[4, 5, 6]] -> [[6, 5, 4]] + [[1,2,3]]
+   [[6, 5, 4, 1, 2, 3]]
+'''
 def apply_rotary_pos_emb(q, k, cos, sin, position_ids, unsqueeze_dim=1):
-    """Applies Rotary Position Embedding to the query and key tensors.
+    """Q,K RoPE 적용
 
     Args:
         q (`torch.Tensor`): The query tensor.
         k (`torch.Tensor`): The key tensor.
-        cos (`torch.Tensor`): The cosine part of the rotary embedding.
-        sin (`torch.Tensor`): The sine part of the rotary embedding.
+        cos (`torch.Tensor`): rotary embedding 코사인 파트
+        sin (`torch.Tensor`): rotary embedding 사인 파트
+        
         position_ids (`torch.Tensor`):
             The position indices of the tokens corresponding to the query and key tensors. For example, this can be
             used to pass offsetted position ids when working with a KV-cache.
