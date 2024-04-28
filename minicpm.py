@@ -814,22 +814,29 @@ class MiniCPMDecoderLayer(nn.Module):
     ) -> Tuple[torch.FloatTensor, Optional[Tuple[torch.FloatTensor, torch.FloatTensor]]]:
         """
         Args:
-            hidden_states (`torch.FloatTensor`): input to the layer of shape `(batch, seq_len, embed_dim)`
-            attention_mask (`torch.FloatTensor`, *optional*):
-                attention mask of size `(batch_size, sequence_length)` if flash attention is used or `(batch_size, 1,
-                query_sequence_length, key_sequence_length)` if default attention is used.
-            output_attentions (`bool`, *optional*):
-                Whether or not to return the attentions tensors of all attention layers. See `attentions` under
-                returned tensors for more detail.
-            use_cache (`bool`, *optional*):
-                If set to `True`, `past_key_values` key value states are returned and can be used to speed up decoding
-                (see `past_key_values`).
-            past_key_value (`Tuple(torch.FloatTensor)`, *optional*): cached past key and value projection states
+        hidden_states (`torch.FloatTensor`): 입력 텐서로 Shape는 `(batchsize, seq_len, embed_dim)`
+        
+        attention_mask (`torch.FloatTensor`): 
+        Flash Attention을 사용할 경우에는 Shape `(batch_size, sequence_length)` mask
+        defalut attneiton시 `(batch_size, 1, query_sequence_length, key_sequence_length)` mask shape
+        
+        output_attentions (`bool`,): Optional
+        모든 어텐션 layer에서 어텐션 텐서를 반환할지 여부
+        자세한 내용은 아래 참조
+        
+        use_cache (`bool`):
+        `True`로 설정하면 `past_key_values` 키-값 state가 return, 이를 사용하여 decoding 속도를 높일 수 있습니다
+        (`past_key_values` 참조)
+        
+        past_key_value (`Tuple(torch.FloatTensor)`, ): Optional 
+        캐시된 past 키-값 projection 상태
+    
+        
         """
         if "padding_mask" in kwargs:
             warnings.warn(
                 "Passing `padding_mask` is deprecated and will be removed in v4.37. Please make sure use `attention_mask` instead.`"
-            )
+            ) #migation 공지
 
         residual = hidden_states
         hidden_states = self.input_layernorm(hidden_states)
