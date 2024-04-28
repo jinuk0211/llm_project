@@ -688,6 +688,12 @@ class MiniCPMFlashAttention2(MiniCPMAttention):
             (max_seqlen_in_batch_q, max_seqlen_in_batch_k),
         )
 
+'''
+이 모듈의 주요 차이점은 사용하는 어텐션 메커니즘에 있습니다. 
+기본 MiniCPMAttention 모듈은 주로 선형 레이어 및 소프트맥스 함수를 사용하여 어텐션을 구현하는 반면, 
+MiniCPMSdpaAttention은 torch.nn.functional.scaled_dot_product_attention 함수를 사용하여 어텐션을 구현합니다. 이 함수는 내적을 통해 어텐션 스코어를 계산하고, 
+이를 소프트맥스 함수를 통해 정규화합니다.
+'''
 
 class MiniCPMSdpaAttention(MiniCPMAttention):
     """
