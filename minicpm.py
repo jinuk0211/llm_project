@@ -232,19 +232,18 @@ def apply_rotary_pos_emb(q, k, cos, sin, position_ids, unsqueeze_dim=1):
         k (`torch.Tensor`): The key tensor.
         cos (`torch.Tensor`): rotary embedding 코사인 파트
         sin (`torch.Tensor`): rotary embedding 사인 파트
+        position_ids (`torch.Tensor`)
+        쿼리 및 키 텐서에 해당하는 토큰의 위치 index. , KV-캐시를 사용할 때 offset된 positional ID를 pass 할때 사용가능
+
+        unsqueeze_dim (`int`, _optional_, 기본값 1):
+        'unsqueeze_dim' 인수는 cos[position_ids]와 sin[position_ids]를 적절히 브로드캐스트할 수 있도록 (unsqueeze)할 차원을 지정
+        cos[position_ids]와 sin[position_ids]의 모양이 [batch_size, seq_len, head_dim]이라면, q와 k의 모양이 [batch_size, heads, seq_len, head_dim]인 경우
+        unsqueeze_dim=1을 설정하면 cos[position_ids]와 sin[position_ids]가 q와 k의 모양에 브로드캐스트
+        유사하게, q와 k의 모양이 [batch_size, seq_len, heads, head_dim]인 경우에는 unsqueeze_dim=2를 설정
+
+        Returns:
+        `tuple(torch.Tensor)` 로터리 위치 임베딩을 사용하여 회전된 쿼리 및 키 텐서로 구성됩니다.
         
-        position_ids (`torch.Tensor`):
-            The position indices of the tokens corresponding to the query and key tensors. For example, this can be
-            used to pass offsetted position ids when working with a KV-cache.
-        unsqueeze_dim (`int`, *optional*, defaults to 1):
-            The 'unsqueeze_dim' argument specifies the dimension along which to unsqueeze cos[position_ids] and
-            sin[position_ids] so that they can be properly broadcasted to the dimensions of q and k. For example, note
-            that cos[position_ids] and sin[position_ids] have the shape [batch_size, seq_len, head_dim]. Then, if q and
-            k have the shape [batch_size, heads, seq_len, head_dim], then setting unsqueeze_dim=1 makes
-            cos[position_ids] and sin[position_ids] broadcastable to the shapes of q and k. Similarly, if q and k have
-            the shape [batch_size, seq_len, heads, head_dim], then set unsqueeze_dim=2.
-    Returns:
-        `tuple(torch.Tensor)` comprising of the query and key tensors rotated using the Rotary Position Embedding.
     """
     # cos = cos[position_ids].unsqueeze(unsqueeze_dim)
     # sin = sin[position_ids].unsqueeze(unsqueeze_dim)
