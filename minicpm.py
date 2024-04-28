@@ -55,9 +55,8 @@ try:
 except:
     pass
 
-
-# This makes `_prepare_4d_causal_attention_mask` a leaf function in the FX graph.
-# It means that the function will not be traced through and simply appear as a node in the graph.
+# _prepare_4d_causal_attention_mask" 함수의 내부 연산은 FX 그래프에 나타나지 않고, 
+# 함수 자체가 하나의 노드로 표현될 것이라는 점을 설명
 if is_torch_fx_available():
     if not is_torch_greater_or_equal_than_1_13:
         import torch.fx
@@ -70,16 +69,21 @@ logger = logging.get_logger(__name__)
 _CONFIG_FOR_DOC = "MiniCPMConfig"
 
 
-def _get_unpad_data(attention_mask):
+def _get_unpad_data(attention_mask):  #padding된 데이터 아닌 값에 대한 정보 
     seqlens_in_batch = attention_mask.sum(dim=-1, dtype=torch.int32)
     indices = torch.nonzero(attention_mask.flatten(), as_tuple=False).flatten()
+    #0이 아닌 수의 index 전부 반환 
     max_seqlen_in_batch = seqlens_in_batch.max().item()
     cu_seqlens = F.pad(torch.cumsum(seqlens_in_batch, dim=0, dtype=torch.torch.int32), (1, 0))
+    # seqlens_in_batch를 0차원을 따라 누적합을 계산
+    # F.pad를 사용하여 맨 앞에 0을 추가하여 첫 번째 시퀀스의 시작 인덱스가 0 [1,2,3] -> [0,1,2,3]
     return (
         indices,
         cu_seqlens,
         max_seqlen_in_batch,
     )
+
+
 
 
 def _expand_mask(mask: torch.Tensor, dtype: torch.dtype, tgt_len: Optional[int] = None):
@@ -94,12 +98,12 @@ def _make_causal_mask(
 ):
     warnings.warn(
         "Calling `transformers.models.minicpm.modeling_minicpm._make_causal_mask` is deprecated and will be removed in v4.37. Use `transformers.models.minicpm.modeling_minicpm.AttentionMaskConverter._make_causal_mask"
-    )
+    )  #마이그레이션 migration 공지
     return AttentionMaskConverter._make_causal_mask(
         input_ids_shape=input_ids_shape, dtype=dtype, device=device, past_key_values_length=past_key_values_length
     )
 
-# @torch.jit.script  # type: ignore
+# @torch.jit.script  # type: ignore,  just in time
 def rms_layernorm(hidden: torch.Tensor, weight: torch.Tensor, eps: float):
     old_dtype = hidden.dtype
     variance = hidden.to(torch.float32).pow(2).mean(dim=-1, keepdim=True)
@@ -260,14 +264,14 @@ class MiniCPMMLP(nn.Module):
 
     def forward(self, x):
         if self.config.pretraining_tp > 1:
-            slice = self.intermediate_size // self.config.pretraining_tp
+            slice = self.intermediate_size // self.config.pretraining_tp #텐서 병렬
             gate_proj_slices = self.gate_proj.weight.split(slice, dim=0)
             up_proj_slices = self.up_proj.weight.split(slice, dim=0)
             down_proj_slices = self.down_proj.weight.split(slice, dim=1)
 
             gate_proj = torch.cat(
                 [F.linear(x, gate_proj_slices[i]) for i in range(self.config.pretraining_tp)], dim=-1
-            )
+            ) # linear layer 따로 따로 수행하고 concat
             up_proj = torch.cat([F.linear(x, up_proj_slices[i]) for i in range(self.config.pretraining_tp)], dim=-1)
 
             intermediate_states = (self.act_fn(gate_proj) * up_proj).split(slice, dim=2)
@@ -281,21 +285,24 @@ class MiniCPMMLP(nn.Module):
         return down_proj
 
 
-def repeat_kv(hidden_states: torch.Tensor, n_rep: int) -> torch.Tensor:
+def repeat_kv(hidden_states: torch.Tensor, n_rep: int) -> torch.Tensor: #multiheadattention에 사용
     """
-    This is the equivalent of torch.repeat_interleave(x, dim=1, repeats=n_rep). The hidden states go from (batch,
-    num_key_value_heads, seqlen, head_dim) to (batch, num_attention_heads, seqlen, head_dim)
+    torch.repeat_interleave(x, dim=1, repeats=n_rep)와 동일
+    [[1,2],[3,4]] dim=1, n_rep = 3  ----> [[1,1,1,2,2,2,],[3,3,3,4,4,4]]
+    (batch, num_key_value_heads, seqlen, head_dim) to (batch, num_attention_heads, seqlen, head_dim)
     """
     batch, num_key_value_heads, slen, head_dim = hidden_states.shape
     if n_rep == 1:
         return hidden_states
     hidden_states = hidden_states[:, :, None, :, :].expand(batch, num_key_value_heads, n_rep, slen, head_dim)
     return hidden_states.reshape(batch, num_key_value_heads * n_rep, slen, head_dim)
-
-
-
-class MiniCPMAttention(nn.Module):
-    """Multi-headed attention from 'Attention Is All You Need' paper"""
+    '''
+    n_rep=1 인 경우 그대로 hidden_states
+    n_rep>1 인 경우 hidden_states를 n_rep 횟수만큼 반복하고 reshape
+    
+    예를 들어 num_key_value_heads=8, num_attention_heads=16 이라면 n_rep=2가 되고, key/value 벡터가 2번 반복되어 shape이 (batch, 16, seqlen, head_dim)
+    '''
+class MiniCPMAttention(nn.Module): #multihead attention
 
     def __init__(self, config: MiniCPMConfig, layer_idx: Optional[int] = None):
         super().__init__()
@@ -340,14 +347,14 @@ class MiniCPMAttention(nn.Module):
         else:
             scaling_type = self.config.rope_scaling["type"]
             scaling_factor = self.config.rope_scaling["factor"]
-            if scaling_type == "linear":
-                self.rotary_emb = MiniCPMLinearScalingRotaryEmbedding(
+            if scaling_type == "linear":      #linear RoPE
+                self.rotary_emb = MiniCPMLinearScalingRotaryEmbedding( 
                     self.head_dim,
                     max_position_embeddings=self.max_position_embeddings,
                     scaling_factor=scaling_factor,
                     base=self.rope_theta,
                 )
-            elif scaling_type == "dynamic":
+            elif scaling_type == "dynamic":    #NTK? RoPE
                 self.rotary_emb = MiniCPMDynamicNTKScalingRotaryEmbedding(
                     self.head_dim,
                     max_position_embeddings=self.max_position_embeddings,
@@ -377,7 +384,7 @@ class MiniCPMAttention(nn.Module):
 
         bsz, q_len, _ = hidden_states.size()
 
-        if self.config.pretraining_tp > 1:
+        if self.config.pretraining_tp > 1: #병렬처리
             key_value_slicing = (self.num_key_value_heads * self.head_dim) // self.config.pretraining_tp
             query_slices = self.q_proj.weight.split(
                 (self.num_heads * self.head_dim) // self.config.pretraining_tp, dim=0
