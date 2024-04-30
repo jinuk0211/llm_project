@@ -13,12 +13,21 @@ med-PaLM 2는 factuality, reasoning,harm, and bias 측면에서 의사들을 능
 
 방법
 1. self-training 과 web search integration을 통한 Advanced reasoning
+
+NLP LLM
 medical notes 요약, 진료의뢰서 생성 등의 덜 복잡한 reasoning task
-<- Med-Gemini-M 1.0 : 제미니 finetuning한거
+<- Med-Gemini-M 1.0 : 제미니 pro finetuning한거
 복잡한 reasoning과제
-<- Med-Gemini-L 1.0 : 제미니 self-training 방식으로 finetuning 한거
+<- Med-Gemini-L 1.0 : 제미니 ultra self-training 방식으로 finetuning 한거
  웹에서 서치할 수 있게해 self training 가능하게 함, 추론 시 novel uncertainty-guided search strategy를 개발해냄 <- 복잡한 clinical reasoning task를 수행할 수 있게 하기위해
 
-제미니 자체 ㅅㄹ
+multimodal LMM
+<- Med-Gemini-S 1.0 : 제미니 nano에 특별화된 encoder 추가해서 새로운 의료 modalities 에 대한 adapt 능력 향상
+<- Med-Gemini-M 1.5 : L 제미니 pro에 multimodal 의료 데이터로 finetuning
+
+long context 처리 with Chain of reasoning
+Med-Gemini-M 1.5 재사용 : 
+novel inference time chain-of-reasoning 사용(Towards Conversational Diagnostic AI 논문 2024 Tao Tu)
+-> long EHR에 대한 이해력 향상 (electrical health record)
 
 ![image](https://github.com/jinuk0211/llm_project/assets/150532431/2ff69c1a-aeb9-455b-9889-b784f8b83c47)
