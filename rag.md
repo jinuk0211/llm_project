@@ -9,4 +9,7 @@ retrieval augemented generation은 주로 hallucination을 고치기위해, 새�
 
 실험 :
 LLM의 지식( train과정을 거친) 와 그와 반대되는 retrieved 내용의 줄다리기 (tug of war)을 분석
+
+https://youtube.com/@johannesjolkkonen?si=GXG9190Ikvo-C91r
+
 ![image](https://github.com/jinuk0211/llm_project/assets/150532431/a099e1b3-6966-49c6-9e8b-aa97a5f484e5)
