@@ -30,4 +30,7 @@ Med-Gemini-M 1.5 재사용 :
 novel inference time chain-of-reasoning 사용(Towards Conversational Diagnostic AI 논문 2024 Tao Tu)
 -> long EHR에 대한 이해력 향상 (electrical health record)
 
+데이터셋
+medQA- 고려해야할 사항이 많은 다양한 시나리오에서 의학 지식과 추론 능력을 평가하기 위해 고안된 미국 의사 국가고시(USMLE) 문제
+ 
 ![image](https://github.com/jinuk0211/llm_project/assets/150532431/2ff69c1a-aeb9-455b-9889-b784f8b83c47)
