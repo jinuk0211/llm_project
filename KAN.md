@@ -1,3 +1,7 @@
+딥러닝의 FFN의 대체자 - KAN
+
+https://arxiv.org/pdf/2404.19756 - 2024년 4월 30일자 논문
+
 수학(매듭 이론)과 물리학(앤더슨 localization)의 2가지 예시를 활용하여 KAN이 과학자들이 수학과 물리 법칙을 (재)발견하는 데 있어 도움이 되는 "협력자"가 될 수 있음을 보여줌
 
 다층 퍼셉트론(Multi-layer perceptrons, MLPs) 은 fully connected feed forward 신경망으로 알려져 있으며, 오늘날 딥러닝 모델의 근간이 되는 구성 요소. MLPs의 중요성은 과소평가될 수 없는데, 왜냐하면 이들은 범용 근사 정리(universal approximation theorem)에 의해 보장된 표현력(representation) 때문에 비선형 함수를 근사화하는 machine leraning의 기본 모델이기 때문/ 하지만 MLPs가 우리가 구축할 수 있는 최고의 비선형 회귀 모델인가?에 대한 의문점 존재
