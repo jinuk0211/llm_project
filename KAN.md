@@ -61,6 +61,10 @@ MLP에서는 한 번에 선형 변환(nn.linear)과 비선형성(activation laye
 대충 phi함수 정의하고 몇번째 layer고 몇번째 input이고 등등 어렵게 수식으로 정의
 
 ![image](https://github.com/jinuk0211/llm_project/assets/150532431/f8daf9f9-d924-41b2-b944-367864d6e09e)
+위의 두 사진의 직관적 정의
+![image](https://github.com/jinuk0211/llm_project/assets/150532431/2dccda4c-6661-4803-b173-7247bf1dc9af)
+
+
 ![image](https://github.com/jinuk0211/llm_project/assets/150532431/714afe42-b4f1-4854-9914-09eee9118364)
 
 
