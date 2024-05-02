@@ -7,7 +7,7 @@ MLP - inspired by universal approximation theorem
 하나의 hidden layer에 수많은 노드를 쌓으면 거의 모든 함수를 근사할수 있다
 ![image](https://github.com/jinuk0211/llm_project/assets/150532431/e5e75dd1-d5a9-4f2a-bfee-6bece9cf39c9)
 딥러닝의 지도학습의 근간
-![image](https://github.com/jinuk0211/llm_project/assets/150532431/5cc4e399-1b00-4ab7-ab46-e6b02edfefa7)
+![image](https://github.com/jinuk0211/llm_project/assets/150532431/1ca9507c-0930-467c-bba8-970fb3a01435)
 
 
 KAN - inspired by Kolmogorov-Arnold representation theorem
@@ -43,14 +43,4 @@ but
 이러한 1차원 함수들은 매끄럽지 않고(non smooth) 심지어 프랙탈(fractal) 구조를 가질 수 있기 때문에 실제로는 학습하기 어려울 수 있음
 
 -> 위의 단점 때문에 Kolmogorov-Arnold 표현 정리는 기계학습 분야에서 사형 선고를 받음 ( 빚좋은 개살구)
-![image](https://github.com/jinuk0211/llm_project/assets/150532431/12b4e5ab-f351-4e04-839d-b90a69a8d2a8)
-
-위의 예시
-
-![image](https://github.com/jinuk0211/llm_project/assets/150532431/f1e8e8b6-ce22-417a-8378-4cd1f06336ac)
-
-그러나 우리는 Kolmogorov-Arnold 정리가 기계학습에 유용할 것이라는 낙관적인 입장.
-첫째, 
-위와 같은 함수 F(x) 형태에 국한될 필요없이 network를 임의의 depth, width 일반화하는 
-둘째,
-과학과 일상생활에서 대부분의 함수는 대부분 부드럽고 sparse compositional structure를 가지므로 부드러운? Kolmogorov-Arnold representation을 촉진시킬 수 있다. 이는 물리학자들의 사고방식과 비슷한데 worst case보다 typical case에 관심을 갖는 점이 그렇다. 결국 우리의 물리적 세계와 ML task는 물리학과 ML이 전혀 유용하거나 완전히 일반화될 수 있도록 어떠한 구조를 가져야만 한다
+![image](https://github.com/jinuk쳐
