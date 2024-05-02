@@ -47,4 +47,18 @@ but
 이러한 1차원 함수들은 매끄럽지 않고(non smooth) 심지어 프랙탈(fractal) 구조를 가질 수 있기 때문에 실제로는 학습하기 어려울 수 있음
 
 -> 위의 단점 때문에 Kolmogorov-Arnold 표현 정리는 기계학습 분야에서 사형 선고를 받음 ( 빚좋은 개살구)
-![image](https://github.com/jinuk쳐
+
+KAN 아키텍쳐
+![KAN layer 1D function](https://github.com/jinuk0211/llm_project/assets/150532431/270a0a7f-1519-43d2-a8a5-cc2090d9eb85)
+![스크린샷 2024-05-02 142136](https://github.com/jinuk0211/llm_project/assets/150532431/cc68c209-965c-4e1d-b5ff-0b924859e176)
+![kAN activation](https://github.com/jinuk0211/llm_project/assets/150532431/7edb6fec-3d79-4c58-bb78-058718906711)
+
+approximation ability
+![knn approximation ability](https://github.com/jinuk0211/llm_project/assets/150532431/de81738f-04d1-4c0d-abb0-7391059a1cc8)
+![knn approximation ability](https://github.com/jinuk0211/llm_project/assets/150532431/d298f348-9714-4677-b104-cb466a11f52f)
+
+
+FFN의 L2 regularization을 KAN에 적용
+![image](https://github.com/jinuk0211/llm_project/assets/150532431/ec6dc43e-5c14-4503-a437-7590cf4f1a8a)
+
+
