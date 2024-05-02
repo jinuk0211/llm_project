@@ -68,7 +68,28 @@ MLP에서는 한 번에 선형 변환(nn.linear)과 비선형성(activation laye
 ![image](https://github.com/jinuk0211/llm_project/assets/150532431/714afe42-b4f1-4854-9914-09eee9118364)
 
 
-approximation ability
+approximation ability with KAT  
+KAT 설명 - Claude 제공
+Kolmogorov-Arnold 정리는 표현 이론(representation theory)에서 매우 중요한 결과 중 하나입니다. 이 정리는 연속 함수를 단순한 가산 함수(additive function)와 곱 함수(multiplication function)의 합성으로 근사할 수 있다는 것을 보여줍니다.
+구체적으로 Kolmogorov-Arnold 정리는 다음과 같이 정리할 수 있습니다:
+n차원 유클리드 공간 R^n에서 정의된 연속 함수 f(x1, x2, ..., xn)는 다음과 같이 2n+1개의 단일 변수 연속 함수들의 합성으로 표현될 수 있다:
+f(x1, x2, ..., xn) = Ψ( Φ1(x1), Φ2(x2), ..., Φn(xn), Φn+1(x1, x2), Φn+2(x1, x3), ..., Φ2n(xn-1, xn) )
+여기서 Ψ, Φ1, Φ2, ..., Φ2n은 적절한 단일 변수 연속 함수들입니다.
+이 정리의 핵심 아이디어는 복잡한 다변수 함수를 단순한 단변수 함수들의 적절한 조합으로 근사할 수 있다는 것입니다. 이는 고차원 문제를 저차원 부분문제들로 분해할 수 있음을 의미합니다.
+Kolmogorov-Arnold 정리는 함수 근사, 신경망, 기계학습 등 다양한 분야에서 이론적, 실용적 의의를 지니고 있습니다. 특히 커널 기반 근사 이론과 연관이 깊습니다
+
+2.1의 방정식 <- non smooth 
+모델의 사이즈를 늘리면 activation이 더 smooth해짐 밑의 예시
+밑의 f(x) 함수는 [4, 2, 1, 1] 의 KAN 레이어 3개로 스무스하게 표현될 수 있다
+만약 f(x)가 f = (ΦL−1 ◦ ΦL−2 ◦ · · · ◦ Φ1 ◦ Φ0)x 의 representation을 admit한다면 f와 이 representation에 관련있는 어떤 상수 C와
+grid 크기가 G인 approximation bound 가 존재한다. 
+ there exist k-th order B-spline functions , such that for any 0 ≤ m ≤ k, we have the bound 
+-> 2.15의 bound
+또한 C^m-norm을 m번째 순서까지의 derivative들의 강도를 측정하기 위해 사용한다.
+
+이 항에 따르면, G가 작아질수록 (격자가 조밀해질수록) 오차 상한이 작아지므로 보다 정확한 근사가 가능해집니다.
+![image](https://github.com/jinuk0211/llm_project/assets/150532431/1b8f8948-3ac9-4972-8ca0-8842fb0b4a09)
+
 ![knn approximation ability](https://github.com/jinuk0211/llm_project/assets/150532431/de81738f-04d1-4c0d-abb0-7391059a1cc8)
 ![knn approximation ability](https://github.com/jinuk0211/llm_project/assets/150532431/d298f348-9714-4677-b104-cb466a11f52f)
 
