@@ -1,4 +1,5 @@
-딥러닝의 FFN의 대체자 - KAN
+새로운 뉴럴넷 , 딥러닝의 FFN의 대체제 - KAN
+Kolmogorov–Arnold Networks
 
 https://arxiv.org/pdf/2404.19756 - 2024년 4월 30일자 논문
 
