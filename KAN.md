@@ -1,11 +1,14 @@
 새로운 뉴럴넷 , 딥러닝의 FFN의 대체제 - KAN
+
 Kolmogorov–Arnold Networks
+KAN이 학습한 수식(simple symbolic task)들의 network
+![image](https://github.com/jinuk0211/llm_project/assets/150532431/f47d95b3-58fb-45ca-938a-44b8074d5d11)
 
 https://arxiv.org/pdf/2404.19756 - 2024년 4월 30일자 논문
 
 수학(매듭 이론)과 물리학(앤더슨 localization)의 2가지 예시를 활용하여 KAN이 과학자들이 수학과 물리 법칙을 (재)발견하는 데 있어 도움이 되는 "협력자"가 될 수 있음을 보여줌
 
-다층 퍼셉트론(Multi-layer perceptrons, MLPs) 은 fully connected feed forward 신경망으로 알려져 있으며, 오늘날 딥러닝 모델의 근간이 되는 구성 요소. MLPs의 중요성은 과소평가될 수 없는데, 왜냐하면 이들은 범용 근사 정리(universal approximation theorem)에 의해 보장된 표현력(representation) 때문에 비선형 함수를 근사화하는 machine leraning의 기본 모델이기 때문/ 하지만 MLPs가 우리가 구축할 수 있는 최고의 비선형 회귀 모델인가?에 대한 의문점 존재
+다층 퍼셉트론(Multi-layer perceptrons, MLPs) 은 fully connected feed forward 신경망으로 알려져 있으며, 오늘날 딥러닝 모델의 근간이 되는 구성 요소. MLPs의 중요성은 과소평가될 수 없는데, 왜냐하면 이들은 범용 근사 정리(universal approximation theorem)에 의해 보장된 표현력(representation) 때문에 비선형 함수를 근사화하는 machine leraning의 기본 모델이기 때문 하지만 MLPs가 우리가 구축할 수 있는 최고의 비선형 회귀 모델인가?에 대한 의문점이 여전히 존재
 MLPs의 광범위한 사용에도 불구하고, 이들은 중대한 단점이 있음. 예를 들어 트랜스포머[4]에서 MLPs는 거의 모든 non embeddings 매개변수를 소비하며 일반적으로 (attention) 계층에 비해 해석하기 (less interpretable) 어려움
 
 MLP - inspired by universal approximation theorem
@@ -51,16 +54,27 @@ but
 
 KAN 아키텍쳐
 ![KAN layer 1D function](https://github.com/jinuk0211/llm_project/assets/150532431/270a0a7f-1519-43d2-a8a5-cc2090d9eb85)
+MLP에서는 한 번에 선형 변환(nn.linear)과 비선형성(activation layer)으로 이루어진 레이어를 정의한 후에 더 많은 레이어를 쌓아 신경망을 더 깊게 만들 수 있음.하지만 KAN은 <-? 깊은 KAN을 구축하기 위해서는 먼저 "KAN 레이어는 무엇인가?"라는 질문에 대답해야 한다. 결과적으로, nin(input_dim) 차원의 입력과 nout(output_dim) 차원의 출력을 갖는 KAN 레이어는 1D 함수의 행렬로 정의될 수 있다.
+위의 사례를 보자면 inner function 의 nin은 n, nout은 2n+1이고 outer function의 nin은 2n+1이고 nout은 1이된다. 이게 Kolmogorov-Arnold representations이고 MLP와 똑같이 layer를 더 깊게 쌓으면 됨
 (2.2) 각각의 1D function을 B spline curve로 파라미터화시킨다.
-![스크린샷 2024-05-02 142136](https://github.com/jinuk0211/llm_project/assets/150532431/cc68c209-965c-4e1d-b5ff-0b924859e176)
 ![kAN activation](https://github.com/jinuk0211/llm_project/assets/150532431/7edb6fec-3d79-4c58-bb78-058718906711)
+대충 phi함수 정의하고 몇번째 layer고 몇번째 input이고 등등 어렵게 수식으로 정의
 
 approximation ability
 ![knn approximation ability](https://github.com/jinuk0211/llm_project/assets/150532431/de81738f-04d1-4c0d-abb0-7391059a1cc8)
 ![knn approximation ability](https://github.com/jinuk0211/llm_project/assets/150532431/d298f348-9714-4677-b104-cb466a11f52f)
 
+grid extension
+![image](https://github.com/jinuk0211/llm_project/assets/150532431/30b95b23-4d87-431f-b1d5-944c1c55a71a)
 
 FFN의 L2 regularization을 KAN에 적용
 ![image](https://github.com/jinuk0211/llm_project/assets/150532431/ec6dc43e-5c14-4503-a437-7590cf4f1a8a)
 
+simplification 기술들 
+![image](https://github.com/jinuk0211/llm_project/assets/150532431/30cf9fc6-2f53-4f4b-9412-04a1526b7eea)
+
+
+interpretable 클릭 한번
+![image](https://github.com/jinuk0211/llm_project/assets/150532431/d923727b-6e8b-486d-89cd-7eaef28f5cbf)
+![스크린샷 2024-05-02 163113](https://github.com/jinuk0211/llm_project/assets/150532431/32d48c2d-2855-413d-8bed-5ec0f58c3b7f)
 
