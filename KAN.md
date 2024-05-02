@@ -72,6 +72,8 @@ approximation ability
 ![knn approximation ability](https://github.com/jinuk0211/llm_project/assets/150532431/de81738f-04d1-4c0d-abb0-7391059a1cc8)
 ![knn approximation ability](https://github.com/jinuk0211/llm_project/assets/150532431/d298f348-9714-4677-b104-cb466a11f52f)
 
+그러면 f와 그 표현에 의존하는 상수 C가 존재하여, 격자 크기 G에 대해 다음과 같은 근사 한계를 갖는다: k차 B-스플라인 함수 ΦG l,i,j가 존재하여, 0 ≤ m ≤ k에 대해 다음 부등식을 만족한다.
+
 grid extension
 ![image](https://github.com/jinuk0211/llm_project/assets/150532431/30b95b23-4d87-431f-b1d5-944c1c55a71a)
 
