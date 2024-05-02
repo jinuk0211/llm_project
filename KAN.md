@@ -35,7 +35,7 @@ MLP는 feature learning 덕분에 COD 덜 시달리지만, univariate 함수를 
 spline : 차원의 저주(COD) 때문에 큰 N에 대해서는 실패할 것. 반면 MLP는 generalized additive structure을 잠재적으로 학습할 수 있지만, 문제가, 예를 들어)ReLU 활성화 함수를 사용할 때 지수 함수와 사인 함수를 근사화하는 데에는 매우 비효율적. 대조적으로 KAN은 합성 구조(compositional structure)와 univariate 함수 모두를 꽤 잘 학습할 수 있기 때문에 MLP 성능을 큰 폭으로 능가
 
 
-![image](https://github.com/jinuk0211/llm_project/assets/150532431/63ea1bdf-4b99-4e17-8921-c620743c89d5)
+![image](https://github.com/jinuk0211/llm_project/assets/150532431/e275b829-cb34-47e5-ab9c-e3454e6216e3)
 
 수학
 만약의 근사함수 f(x)가 다변수 연속함수(on a bounded domain)라면 
