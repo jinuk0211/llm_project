@@ -60,6 +60,10 @@ MLP에서는 한 번에 선형 변환(nn.linear)과 비선형성(activation laye
 ![kAN activation](https://github.com/jinuk0211/llm_project/assets/150532431/7edb6fec-3d79-4c58-bb78-058718906711)
 대충 phi함수 정의하고 몇번째 layer고 몇번째 input이고 등등 어렵게 수식으로 정의
 
+![image](https://github.com/jinuk0211/llm_project/assets/150532431/f8daf9f9-d924-41b2-b944-367864d6e09e)
+![Uploading image.png…]()
+
+
 approximation ability
 ![knn approximation ability](https://github.com/jinuk0211/llm_project/assets/150532431/de81738f-04d1-4c0d-abb0-7391059a1cc8)
 ![knn approximation ability](https://github.com/jinuk0211/llm_project/assets/150532431/d298f348-9714-4677-b104-cb466a11f52f)
