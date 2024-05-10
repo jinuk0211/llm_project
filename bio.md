@@ -13,6 +13,7 @@ med-PaLM 2는 factuality, reasoning,harm, and bias 측면에서 의사들을 능
 
 방법
 1. self-training 과 web search integration을 통한 Advanced reasoning
+(87.2 % -> 91.1 % 정확도로 늘어남
 
 NLP LLM
 medical notes 요약, 진료의뢰서 생성 등의 덜 복잡한 reasoning task
