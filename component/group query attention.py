@@ -65,19 +65,19 @@ def scaled_dot_product_gqa(
     bv, hv, nv, dv = value.shape
     if not (bq == bk == bv and dq == dk == dv):
         raise ValueError(
-            "Expected query, key, and value to have the same batch size (dim=0) and "
-            f"embedding dimension (dim=3), but got query: {query.shape}, "
+            "query, key, value가 같은 batchsize 를 가져야함 "
+            f"embedding dimension (dim=3)이 같지 않음, query : {query.shape}, "
             f"key: {key.shape}, and value: {value.shape}."
         )
     elif (hk != hv) or (nk != nv):
         raise ValueError(
-            "Expected key and value to have the same size in dimensions 1 and 2, but "
-            f"got key: {key.shape} and value: {value.shape}."
+            "key 와 value의 shape 1,2 dim의 size가 같지 않음 "
+            f"key: {key.shape} value: {value.shape}."
         )
     elif hq % hk != 0:
         raise ValueError(
-            "Expected query heads to be a multiple of key/value heads, but got "
-            f"query: {query.shape} and key/value: {key.shape}."
+            "query 헤드 수는 kv 헤드수의 배수여야 하지만 아래와 같음"
+            f"query: {query.shape} key/value: {key.shape}."
         )
 
     if scale is None:
@@ -89,25 +89,16 @@ def scaled_dot_product_gqa(
     similarity = einsum(query, key, "b g h n d, b h s d -> b g h n s")
 
     if is_causal:
-        # Mask out the upper triangular portion of the attention matrix. This prevents
-        # the model from attending to tokens in the future.
+    
         mask = torch.ones((bq, nq, nk), device=query.device, dtype=torch.bool).tril_()
 
     if mask is not None:
-        # Expand mask to match the shape of the attention matrix.
-        # If mask is 2D, assume that it is applied to the key/value sequence dimension.
-        # Else if mask is 3D, assume that it is applied to the query/key/value sequence
-        # dimension for all attention heads.
-        #
-        # Users could also provide a 4D mask, which is applied to the query/key/value
-        # sequence dimension for each attention head (though I don't have a particular
-        # use case in mind for that).
+       
         if mask.ndim == 2:
             mask = rearrange(mask, "b s -> b () () () s")
         elif mask.ndim == 3:
             mask = rearrange(mask, "b n s -> b () () n s")
-        # Mask similarity values by setting them to negative infinity.  This guarantees
-        # that they will not contribute to the softmax computation below.
+        
         similarity.masked_fill_(~mask, torch.finfo(similarity.dtype).min)
 
     attention = F.softmax(similarity, dim=-1)
