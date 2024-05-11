@@ -175,23 +175,23 @@ class MultiheadGQA(nn.Module):
 
         if self.query_heads % self.kv_heads != 0:
             raise ValueError(
-                f"query_heads ({query_heads}) must be divisible by "
-                f"kv_heads ({kv_heads})"
+                f"쿼리의 헤드 개수가 ({query_heads}) 나눠지지 않음 "
+                f"key, value의 헤드 개수로 ({kv_heads}) 나머지 0이 되야함"
             )
         elif (embed_dim % self.query_heads != 0) or (embed_dim % self.kv_heads != 0):
             raise ValueError(
-                f"embed_dim ({embed_dim}) must be divisible by "
-                f"query_heads ({query_heads}) and kv_heads ({kv_heads})"
+                f"embed_dim ({embed_dim})이 나눠지지 않음 "
+                f"query_heads ({query_heads})와 kv_heads ({kv_heads})로"
             )
 
-        head_dim = embed_dim // query_heads
+        head_dim = embed_dim // query_heads 
         if not head_dim % 8 == 0:
             raise ValueError(
-                f"head_dim (embed_dim / num_heads = {head_dim}) must be divisible by 8"
+                f"head_dim (embed_dim / num_heads = {head_dim}) 은 8로 나눠져야 함"
             )
         if not head_dim <= 128:
             raise ValueError(
-                f"head_dim (embed_dim / num_heads = {head_dim}) must be <= 128"
+                f"head_dim (embed_dim / num_heads = {head_dim})은 128 이하여야 함"
             )
 
         # Query projection layer is the same as in vanilla MHA.
