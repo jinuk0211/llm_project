@@ -1,0 +1,10 @@
+![image](https://github.com/jinuk0211/llm_project/assets/150532431/47d0eb0c-56bf-446b-aaf6-5973d6229d0a)
+![image](https://github.com/jinuk0211/llm_project/assets/150532431/b6d1c466-acce-4214-ac63-537a94f178e4)
+![image](https://github.com/jinuk0211/llm_project/assets/150532431/0fd9b6f0-4684-4e50-a2ed-65668d9c92f1)
+![image](https://github.com/jinuk0211/llm_project/assets/150532431/826c8542-be68-4d78-88db-76f8cdf94be6)
+![image](https://github.com/jinuk0211/llm_project/assets/150532431/940d191c-a704-4ca6-9308-573a0a75aa34)
+![image](https://github.com/jinuk0211/llm_project/assets/150532431/cee4028f-ac9b-4bf2-8a0c-284c9e9ec395)
+
+![image](https://github.com/jinuk0211/llm_project/assets/150532431/f1b7a84d-56cf-4228-8a7d-117b43d2c2c2)
+![image](https://github.com/jinuk0211/llm_project/assets/150532431/5bd65acb-c378-40fd-ad80-358702adfebf)
+![image](https://github.com/jinuk0211/llm_project/assets/150532431/1bc155ff-feb4-409f-917c-006a5acdd34e)
